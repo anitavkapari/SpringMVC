@@ -44,6 +44,18 @@ public class HomeController {
         modelAndView.addObject("rollNo", 122);
         LocalDateTime now = LocalDateTime.now();
         modelAndView.addObject("time",now);
+        
+        List<String> name = new ArrayList<String>();
+        name.add("Anita");
+        name.add("Annu");
+        name.add("Avi");
+        name.add("Aniket");
+        name.add("Ankita");
+        name.add("Anita Kapari");
+        name.add("A");
+
+        modelAndView.addObject("sname",name);
+
         modelAndView.setViewName("help");//setting the view name
 		return modelAndView;
 	}
