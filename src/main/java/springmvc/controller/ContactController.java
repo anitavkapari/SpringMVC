@@ -1,18 +1,28 @@
 package springmvc.controller;
 
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import springmvc.model.User;
+import springmvc.modelview.User;
+import springmvc.service.UserServices;
 
 @Controller
 public class ContactController {
+	
+	@Autowired
+	private UserServices userServices;
+	
+	@ModelAttribute
+	public void comman(Model m) {
+		m.addAttribute("title", "Spring MVC");
+		m.addAttribute("title1", "Spring MVC details");
+
+	}
 
 	@RequestMapping("/contact")
 	public String contact() {
@@ -21,11 +31,22 @@ public class ContactController {
 	}
 	
 	@RequestMapping(path = "/registerUser", method = RequestMethod.POST)
-	public String registerHandler(
-			@RequestParam(name="userEmail" , required=false) String userEmail,
+	public String registerHandler(@ModelAttribute User user , Model model)//use @ModelAttribute annotation 
+
+	{		
+		System.out.println("User details: " + user);
+		if(user.getUserName().isEmpty())
+		{
+			System.out.println("Not..." );
+
+			return "redirect:/contact";
+
+		}
+	/*@RequestParam(name="userEmail" , required=false) String userEmail,
 			@RequestParam("userName") String userName,
 			@RequestParam("userPassword") String userPassword,
 			Model model){	
+		
 		User user= new User();
 		user.setUserEmail(userEmail);
 		user.setUserName(userName);
@@ -43,6 +64,10 @@ public class ContactController {
 
 		//String name = request.getParameter("name");
         //System.out.println("User name: " + name);
+*/	
+		
+		int createUser = this.userServices.createUser(user);
+		model.addAttribute("msg","user created with id" +  createUser);
 		return "succes";
 	}
 }

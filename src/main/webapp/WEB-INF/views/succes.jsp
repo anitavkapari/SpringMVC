@@ -9,6 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h3>${title}</h3>
+	<h3>${title1}</h3>
+	<h1 style="color:green">${msg}</h1>
+
 	<h3>Welcome,${user.userName}</h3>
 	<h3>Your Email Address ${user.userEmail}</h3>
 	<h3>Your Password is ${user.userPassword} try to secure password</h3>
